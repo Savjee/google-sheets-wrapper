@@ -1,0 +1,17 @@
+{
+  "name": "google-sheets-wrapper",
+  "version": "1.0.0",
+  "description": "Lightweight wrapper around the official Google Sheets API that makes it easy to read/write rows",
+  "keywords": ["google sheets", "typescript"],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Xavier Decuyper <hi@savjee.be>",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "@types/node": "^7.0.5",
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^17.1.0"
+  }
+}
