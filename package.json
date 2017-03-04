@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha tests/"
   },
   "author": "Xavier Decuyper <hi@savjee.be>",
   "license": "MIT",
@@ -19,6 +19,9 @@
     "googleapis": "^17.1.0"
   },
   "devDependencies": {
-    "typescript": "^2.2.1"
+    "@types/mocha": "^2.2.39",
+    "typescript": "^2.2.1",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
   }
 }
