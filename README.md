@@ -13,7 +13,7 @@ The library supports 2 ways of interacting with a Google Sheet: getting rows and
 ## Getting rows
 ```javascript
 // Open spreadsheet with ID XXXX-XXXX-XXXX and work with columns A to F in worksheet "Sheet 1"
-let sheet = new GSheet('XXXXXXXXXX-XXXXXXXXX-XXXXXXXX', "'Sheet 1'!A:F");
+let sheet = new GoogleSheet('XXXXXXXXXX-XXXXXXXXX-XXXXXXXX', "'Sheet 1'!A:F");
 
 // Get the data
 let data = await sheet.getRows();
