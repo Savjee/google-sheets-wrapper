@@ -8,6 +8,7 @@ export class GoogleSheet{
     private sheets = this.google.sheets('v4');
     private authFactory = new this.googleAuth();
     private authClient;
+    private fs = require('fs');
     
     // Attributes
     private sheetId: string;    
@@ -15,10 +16,12 @@ export class GoogleSheet{
 
     
     constructor(sheetId: string, range: string) {
-
-        // Check if authentication is set
         if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-            throw new Error('Environment variable "GOOGLE_APPLICATION_CREDENTIALS" not set');
+            throw new Error('Environment variable "GOOGLE_APPLICATION_CREDENTIALS" not set.');
+        }
+
+        if (!this.fs.existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS)) {
+            throw new Error('Credentials file does not exist.');
         }
 
         this.sheetId = sheetId;

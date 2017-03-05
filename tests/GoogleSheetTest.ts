@@ -1,16 +1,23 @@
+import { GoogleSheet } from '../src/GoogleSheet';
 import "mocha";
+import "chai";
+import { expect } from 'chai';
 
 describe('GoogleSheet test', () => {
-
-    describe('Constructor', () => {
-
-        it('Should fail with a wrong spreadsheet id', (done) => {
-            done();
+    describe('Authentication', () => {
+        it('Should fail when GOOGLE_APPLICATION_CREDENTIALS is not set', () => {
+            delete process.env.GOOGLE_APPLICATION_CREDENTIALS;
+            expect(() => {
+                new GoogleSheet("sheetId", "range");
+            }).to.throw(Error);
         });
 
-        it('Should fail with a bad range', (done) => {
-            done();
+        it('Should fail when GOOGLE_APPLICATION_CREDENTIALS is set to a non-existing file', () => {
+            process.env.GOOGLE_APPLICATION_CREDENTIALS = "/tmp/credentials_that_dont_exist.json";
+
+            expect(() => {
+                new GoogleSheet("sheetId", "range");
+            }).to.throw(Error);
         });
-        
-    });
+    })
 });
