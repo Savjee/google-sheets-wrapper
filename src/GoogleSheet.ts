@@ -15,6 +15,12 @@ export class GoogleSheet{
 
     
     constructor(sheetId: string, range: string) {
+
+        // Check if authentication is set
+        if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+            throw new Error('Environment variable "GOOGLE_APPLICATION_CREDENTIALS" not set');
+        }
+
         this.sheetId = sheetId;
         this.range = range;
     }
