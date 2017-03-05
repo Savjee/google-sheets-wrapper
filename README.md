@@ -22,12 +22,12 @@ let data = await sheet.getRows();
 console.log(data);
 ```
 
-This will map your rows to JSON objects, using the first row of your spreadsheet as name for the values.
+This will map your rows to objects, using the first row of your spreadsheet as name for the values.
 Here is an example output for a simple spreadsheet:
 
 ![Example spreadsheet](examples/simple-spreadsheet.png)
 
-```json
+```
 [ 
     { id: '1', date: '02-03-2017', description: 'Just a test' },
     { id: '2', date: '04-03-2017', description: 'Another test' } 
