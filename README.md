@@ -23,7 +23,10 @@ export GOOGLE_APPLICATION_CREDENTIALS=/path/to/my/credentials.json
 ## Getting rows
 ```javascript
 // Open spreadsheet with ID XXXX-XXXX-XXXX and work with columns A to F in worksheet "Sheet 1"
-let sheet = new GoogleSheet('XXXXXXXXXX-XXXXXXXXX-XXXXXXXX', "'Sheet 1'!A:C");
+let sheet = new GoogleSheet({
+    sheetId: "XXXXXXXXXX-XXXXXXXXX-XXXXXXXX",
+    range: "'Sheet 1'!A:C"
+});
 
 // Get the data
 let data = await sheet.getRows();

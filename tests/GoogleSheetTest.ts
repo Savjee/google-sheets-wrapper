@@ -8,7 +8,10 @@ describe('GoogleSheet test', () => {
         it('Should fail when GOOGLE_APPLICATION_CREDENTIALS is not set', () => {
             delete process.env.GOOGLE_APPLICATION_CREDENTIALS;
             expect(() => {
-                new GoogleSheet("sheetId", "range");
+                new GoogleSheet({
+                    sheetId: 'something',
+                    range: 'something'
+                });
             }).to.throw(Error);
         });
 
@@ -16,7 +19,10 @@ describe('GoogleSheet test', () => {
             process.env.GOOGLE_APPLICATION_CREDENTIALS = "/tmp/credentials_that_dont_exist.json";
 
             expect(() => {
-                new GoogleSheet("sheetId", "range");
+                new GoogleSheet({
+                    sheetId: 'something',
+                    range: 'something'
+                });
             }).to.throw(Error);
         });
     })

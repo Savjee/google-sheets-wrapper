@@ -11,11 +11,9 @@ export class GoogleSheet{
     private fs = require('fs');
     
     // Attributes
-    private sheetId: string;    
-    private range: string;
-
+    private options: IGoogleSheetOptions;
     
-    constructor(sheetId: string, range: string) {
+    constructor(options: IGoogleSheetOptions) {
         if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
             throw new Error('Environment variable "GOOGLE_APPLICATION_CREDENTIALS" not set.');
         }
@@ -24,8 +22,7 @@ export class GoogleSheet{
             throw new Error('Credentials file does not exist.');
         }
 
-        this.sheetId = sheetId;
-        this.range = range;
+        this.options = options;
     }
 
     /**
@@ -34,7 +31,7 @@ export class GoogleSheet{
      */    
     public setRange(range: string) {
         // TODO: add some validation here
-        this.range = range;
+        this.options.range = range;
     }
     
     public async getRows() : Promise<any> {
@@ -43,8 +40,8 @@ export class GoogleSheet{
         return new Promise((resolve, reject) => {
             this.sheets.spreadsheets.values.get({
                 auth: this.authClient,
-                spreadsheetId: this.sheetId,
-                range: this.range
+                spreadsheetId: this.options.sheetId,
+                range: this.options.range
             }, (err, response) => {
                 if (err) { reject(err) }
 
@@ -68,8 +65,8 @@ export class GoogleSheet{
         return new Promise((resolve, reject) => {
             this.sheets.spreadsheets.values.append({
                 auth: this.authClient,
-                spreadsheetId: this.sheetId,
-                range: this.range,
+                spreadsheetId: this.options.sheetId,
+                range: this.options.range,
                 valueInputOption: "USER_ENTERED",
                 insertDataOption: "INSERT_ROWS",
                 resource: {
@@ -86,8 +83,8 @@ export class GoogleSheet{
             });
         });
     }
-
-
+    
+    
     private async authenticate() {
         return new Promise((resolve, reject) => {
 
@@ -101,10 +98,16 @@ export class GoogleSheet{
                     reject('Authentication failed because of ' + err)
                 }
 
-                this.authClient = authClient;                
+                this.authClient = authClient;
+
+                // Ask for read/write permissions by default
+                let scopes = ['https://www.googleapis.com/auth/spreadsheets'];
+
+                if (this.options.readOnly === true) {
+                    scopes = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
+                }
                 
                 if (authClient.createScopedRequired && authClient.createScopedRequired()) {
-                    var scopes = ['https://www.googleapis.com/auth/spreadsheets'];
                     this.authClient = authClient.createScoped(scopes);
                     resolve();
                 }
