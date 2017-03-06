@@ -1,6 +1,6 @@
 {
   "name": "google-sheets-wrapper",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Lightweight wrapper around the official Google Sheets API that makes it easy to read/write rows",
   "keywords": [
     "google sheets",
