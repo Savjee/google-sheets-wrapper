@@ -27,7 +27,7 @@ Other methods of authenticating are currently not supported.
 ## Header row
 This library assumes that the first row in your spreadsheet is used as a header.
 
-![](examples/header-row.png)
+![](https://savjee.github.io/google-sheets-wrapper/screenshots/header-row.png)
 
 The header row is used to transform your rows to Javascript objects. Try to keep the values in the header simple (no spaces, no special characters, ...) The library will convert your titles to camelCase, so be aware of this. For example: ``Time posted`` will be converted to ``timePosted``.
 
@@ -50,7 +50,7 @@ console.log(data);
 
 For example, this spreadsheet:
 
-![](examples/simple-spreadsheet.png)
+![](https://savjee.github.io/google-sheets-wrapper/screenshots/simple-spreadsheet.png)
 
 Will be mapped to this:
 ```
