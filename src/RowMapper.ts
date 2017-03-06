@@ -4,8 +4,7 @@ export class RowMapper{
         let header = input.shift();
 
         for (let i = 0; i < header.length; i++) {
-            header[i] = header[i].toLowerCase();
-            header[i] = header[i].replace(/\s/g, '-');
+            header[i] = RowMapper.convertToCamelCase(header[i]);
         }        
         
         let output = [];
@@ -21,5 +20,15 @@ export class RowMapper{
         }
         
         return output;
+    }
+
+    static convertToCamelCase(content: string): string {
+        // content = content.charAt(0).toLowerCase() + content.slice(1);
+        // content = contennt.replace(/\s/g, '');
+        // return content.toLowerCase();
+        return content.replace(/[^a-z ]/ig, '').replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+            if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+            return index == 0 ? match.toLowerCase() : match.toUpperCase();
+        });
     }
 }

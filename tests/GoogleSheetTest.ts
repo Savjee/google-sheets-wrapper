@@ -9,10 +9,10 @@ describe('GoogleSheet test', () => {
             delete process.env.GOOGLE_APPLICATION_CREDENTIALS;
             expect(() => {
                 new GoogleSheet({
-                    sheetId: 'something',
-                    range: 'something'
+                    sheetId: 'xxxxxxxxxx',
+                    range: "'Sheet 1'!A:F"
                 });
-            }).to.throw(Error);
+            }).to.throw(Error, /not set/);
         });
 
         it('Should fail when GOOGLE_APPLICATION_CREDENTIALS is set to a non-existing file', () => {
@@ -20,10 +20,10 @@ describe('GoogleSheet test', () => {
 
             expect(() => {
                 new GoogleSheet({
-                    sheetId: 'something',
-                    range: 'something'
+                    sheetId: "xxxxxxxxxx",
+                    range: "'Sheet 1'!A:F"
                 });
-            }).to.throw(Error);
+            }).to.throw(Error, /does not exist/);
         });
     })
 });
