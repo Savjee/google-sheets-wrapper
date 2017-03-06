@@ -1,14 +1,14 @@
-import { RowMapper } from './RowMapper';
+import { RowMapper } from "./RowMapper";
 
 export class GoogleSheet {
 
-    // Dependencies    
-    private googleAuth = require('google-auth-library');
-    private google = require('googleapis');
-    private sheets = this.google.sheets('v4');
+    // Dependencies
+    private googleAuth = require("google-auth-library");
+    private google = require("googleapis");
+    private sheets = this.google.sheets("v4");
     private authFactory = new this.googleAuth();
     private authClient;
-    private fs = require('fs');
+    private fs = require("fs");
 
     // Attributes
     private options: IGoogleSheetOptions;
@@ -16,15 +16,15 @@ export class GoogleSheet {
 
     constructor(options: IGoogleSheetOptions) {
         if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-            throw new Error('Environment variable "GOOGLE_APPLICATION_CREDENTIALS" not set.');
+            throw new Error("Environment variable 'GOOGLE_APPLICATION_CREDENTIALS' not set.");
         }
 
         if (!this.fs.existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS)) {
-            throw new Error('Credentials file does not exist.');
+            throw new Error("Credentials file does not exist.");
         }
 
         if (!/['"].*['"]![A-Za-z]{1,2}:[A-Za-z]{1,2}/.test(options.range)) {
-            throw new Error('Range format was invalid. Should be like: "name-of-sheet"!A:F');
+            throw new Error("Range format was invalid. Should be like: 'name-of-sheet'!A:F");
         }
 
         this.options = options;
@@ -32,7 +32,7 @@ export class GoogleSheet {
 
     /**
      * Change the range in which the API should search for data
-     * @param range 
+     * @param range
      */
     public setRange(range: string) {
         // TODO: add some validation here
@@ -48,13 +48,13 @@ export class GoogleSheet {
                 spreadsheetId: this.options.sheetId,
                 range: this.options.range
             }, (err, response) => {
-                if (err) { reject(err) }
+                if (err) { reject(err); }
 
                 if (response && response.values) {
                     resolve(RowMapper.map(response.values));
                 }
 
-                reject('Not a valid response: ' + response);
+                reject("Not a valid response: " + response);
             });
         });
     }
@@ -76,7 +76,7 @@ export class GoogleSheet {
                     throw Error(`Property "${prop} does not exist in spreadsheet"`);
                 }
 
-                rowForGoogle.splice(pos, 0, row[prop]); // Insert them in correct position      
+                rowForGoogle.splice(pos, 0, row[prop]); // Insert them in correct position
             }
 
             sendToGoogle.push(rowForGoogle);
@@ -85,13 +85,13 @@ export class GoogleSheet {
         await this.writeToGoogle(sendToGoogle);
     }
 
-    public async getHeaderRow() : Promise<any>{
+    public async getHeaderRow(): Promise<any> {
         return new Promise(async (resolve, reject) => {
             if (this.headerRow) {
                 resolve(this.headerRow);
             }
 
-            let rangeFirstRow = this.options.range.split('!')[0] + '!1:1';
+            let rangeFirstRow = this.options.range.split("!")[0] + "!1:1";
 
 
             // Go grab it!
@@ -102,7 +102,7 @@ export class GoogleSheet {
                 spreadsheetId: this.options.sheetId,
                 range: rangeFirstRow
             }, (err, response) => {
-                if (err) { reject(err) }
+                if (err) { reject(err); }
 
                 if (response && response.values) {
                     this.headerRow = [];
@@ -116,7 +116,7 @@ export class GoogleSheet {
                     resolve(this.headerRow);
                 }
 
-                reject('Not a valid response: ' + response);
+                reject("Not a valid response: " + response);
             });
         });
     }
@@ -133,37 +133,37 @@ export class GoogleSheet {
                     values: values
                 }
             }, (err, response) => {
-                if (err) { reject(err) }
+                if (err) { reject(err); }
 
                 if (response && response.updates) {
                     resolve(response);
                 } else {
-                    reject('Did not get the expected response: ' + response);
+                    reject("Did not get the expected response: " + response);
                 }
             });
         });
     }
-    
+
     private async authenticate() {
         return new Promise((resolve, reject) => {
 
-            // Skip authentication is it's already done            
+            // Skip authentication is it's already done
             if (this.authClient) {
                 resolve();
             }
 
             this.authFactory.getApplicationDefault((err, authClient) => {
                 if (err) {
-                    reject('Authentication failed because of ' + err)
+                    reject("Authentication failed because of " + err);
                 }
 
                 this.authClient = authClient;
 
                 // Ask for read/write permissions by default
-                let scopes = ['https://www.googleapis.com/auth/spreadsheets'];
+                let scopes = ["https://www.googleapis.com/auth/spreadsheets"];
 
                 if (this.options.readOnly === true) {
-                    scopes = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
+                    scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
                 }
 
                 if (authClient.createScopedRequired && authClient.createScopedRequired()) {
@@ -173,5 +173,4 @@ export class GoogleSheet {
             });
         });
     }
-
 }

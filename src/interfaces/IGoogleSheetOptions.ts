@@ -1,4 +1,4 @@
-interface IGoogleSheetOptions{
+interface IGoogleSheetOptions {
 
     /**
      * ID of the spreadsheet that you want to work with
@@ -13,6 +13,6 @@ interface IGoogleSheetOptions{
 
     /**
      * Set to true if you only want to read and deny writes
-     */    
+     */
     readOnly?: boolean;
 }
