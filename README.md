@@ -4,9 +4,9 @@
 [![Downloads on npm](https://img.shields.io/npm/dt/google-sheets-wrapper.svg)](https://www.npmjs.com/package/google-sheets-wrapper)
 [![License](https://img.shields.io/npm/l/google-sheets-wrapper.svg)](/LICENSE)
 [![Build status](https://img.shields.io/travis/Savjee/google-sheets-wrapper.svg)](https://travis-ci.org/Savjee/google-sheets-wrapper)
-[![Dependencies](https://img.shields.io/david/savjee/google-sheets-wrapper.svg)](https://david-dm.org/Savjee/google-sheets-wrapper)
+[![Dependencies](https://img.shields.io/david/savjee/google-sheets-wrapper.svg)](https://www.npmjs.com/package/google-sheets-wrapper)
 
-A lightweight wrapper around the official Google Sheets API that makes it easy to read and write rows. It's written in TypeScript and uses async/await to handle requests to Google's API (v4).
+A lightweight wrapper around the official Google Sheets API that makes it easy to read and write rows. It's written in TypeScript and uses async/await to handle requests to Google's API.
 
 # Usage
 The library only supports interacting with rows in Google Sheets. Not with columns or individual cells.
@@ -54,14 +54,14 @@ For example, this spreadsheet:
 
 Will be mapped to this:
 ```
-[
+[ 
     { timestamp: '1488806320466', message: 'Hi there!', user: 'Xavier' },
-    { timestamp: '1488806320467', message: 'We meet again.', user: 'Xavier' }
+    { timestamp: '1488806320467', message: 'We meet again.', user: 'Xavier' } 
 ]
 ```
 
 ## Writing new rows
-To write new rows you have to construct an array of objects, much like the output of ``getRows()``.
+To write new rows you have to construct an array of objects, much like the output of ``getRows()``. 
 Each object will be inserted as a row:
 
 ```javascript
