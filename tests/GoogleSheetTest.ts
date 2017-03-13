@@ -27,4 +27,15 @@ describe("GoogleSheet test", () => {
         });
     });
 
+    describe("Constructor", () => {
+        it("Should fail with wrongly formatted range", (done) => {
+            expect(() => {
+                new GoogleSheet({
+                    sheetId: "xxxxxxx",
+                    range: "'some:thing'!"
+                });
+            }).to.throw(Error, /Range format was invalid/);
+        });
+    });
+
 });
